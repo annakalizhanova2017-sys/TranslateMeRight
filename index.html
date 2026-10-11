@@ -3,68 +3,173 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Translation Mobile Submit</title>
+  <title>Рубежный контроль — перевод</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg:#f5f3ef; --surface:#fcfbf8; --surface-2:#f1ede7; --text:#23211d; --muted:#6f6a61;
-      --line:#d9d3ca; --accent:#0c6266; --accent-2:#d8e7e4; --warn:#8d3f22; --warn-bg:#f5e3db;
-      --danger:#8a1f4d; --danger-bg:#f3dbe6; --ok:#2f6a2d; --ok-bg:#dce9d8; --shadow:0 10px 24px rgba(34,32,28,.08);
+      --bg:#f5f3ef;
+      --surface:#fcfbf8;
+      --surface-2:#f1ede7;
+      --text:#23211d;
+      --muted:#6f6a61;
+      --line:#d9d3ca;
+      --accent:#0c6266;
+      --accent-dark:#094b4e;
+      --warn:#8d3f22;
+      --warn-bg:#f5e3db;
+      --ok:#2f6a2d;
+      --ok-bg:#dce9d8;
+      --shadow:0 10px 24px rgba(34,32,28,.08);
       --radius:18px;
     }
     * { box-sizing:border-box; -webkit-tap-highlight-color: transparent; }
     html, body { margin:0; padding:0; }
-    body { font-family:Inter,sans-serif; background:var(--bg); color:var(--text); }
-    .shell { max-width:860px; margin:0 auto; padding:14px 14px 96px; }
-    .card { background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow); }
+    body {
+      font-family:Inter,sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      min-height:100vh;
+    }
+    .shell {
+      max-width:860px;
+      margin:0 auto;
+      padding:14px 14px 100px;
+    }
     .stack { display:grid; gap:14px; }
-    .topgrid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+    .card {
+      background:var(--surface);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+    }
+    .panel { padding:16px; }
+    .topgrid {
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+    }
     .metric { padding:12px 14px; min-height:78px; }
-    .label { font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); margin-bottom:6px; }
+    .label {
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      color:var(--muted);
+      margin-bottom:6px;
+    }
     .value { font-size:21px; font-weight:700; line-height:1.1; }
     .sub { font-size:12px; color:var(--muted); margin-top:5px; }
-    .status-safe { background:linear-gradient(180deg,var(--surface),#f8fcfb); }
-    .status-warn { background:linear-gradient(180deg,var(--warn-bg),var(--surface)); }
-    .status-danger { background:linear-gradient(180deg,var(--danger-bg),var(--surface)); }
-    .panel { padding:16px; }
-    h1, h2, h3, p { margin:0; }
-    h1 { font-family:"Source Serif 4",serif; font-size:30px; margin-bottom:8px; line-height:1.05; }
-    .intro { font-size:14px; color:var(--muted); line-height:1.5; }
+    h1, h2, p { margin:0; }
+    h1 {
+      font-family:"Source Serif 4",serif;
+      font-size:30px;
+      line-height:1.05;
+      margin-bottom:8px;
+    }
+    h2 {
+      font-size:24px;
+      margin-bottom:6px;
+    }
+    .intro {
+      font-size:14px;
+      color:var(--muted);
+      line-height:1.5;
+    }
     .field { display:grid; gap:6px; }
     .field label { font-size:13px; color:var(--muted); }
     input[type="text"], textarea {
-      width:100%; border:1px solid var(--line); border-radius:14px; background:#fffdfa; color:var(--text); outline:none;
+      width:100%;
+      border:1px solid var(--line);
+      border-radius:14px;
+      background:#fffdfa;
+      color:var(--text);
+      outline:none;
       font-family:Inter,sans-serif;
     }
-    input[type="text"] { padding:13px 14px; font-size:16px; }
-    textarea { padding:16px; min-height:42vh; font-size:16px; line-height:1.6; resize:vertical; }
-    input[type="text"]:focus, textarea:focus { border-color:var(--accent); box-shadow:0 0 0 4px rgba(12,98,102,.12); }
+    input[type="text"] {
+      padding:13px 14px;
+      font-size:16px;
+    }
+    textarea {
+      padding:16px;
+      min-height:42vh;
+      font-size:16px;
+      line-height:1.6;
+      resize:vertical;
+    }
+    input[type="text"]:focus, textarea:focus {
+      border-color:var(--accent);
+      box-shadow:0 0 0 4px rgba(12,98,102,.12);
+    }
     .source-box {
-      background:var(--surface-2); border:1px solid var(--line); border-radius:16px; padding:16px;
-      font-family:"Source Serif 4",serif; font-size:18px; line-height:1.62; white-space:pre-wrap;
-      max-height:36vh; overflow:auto;
+      background:var(--surface-2);
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:16px;
+      font-family:"Source Serif 4",serif;
+      font-size:18px;
+      line-height:1.62;
+      white-space:pre-wrap;
+      max-height:36vh;
+      overflow:auto;
     }
-    .note { padding:12px 14px; border-radius:14px; font-size:13px; line-height:1.45; border:1px solid transparent; }
-    .warn { background:var(--warn-bg); color:#5f2b17; border-color:#e4c0af; }
-    .ok { background:var(--ok-bg); color:#234c22; border-color:#bdd5bc; }
-    .toolbar { display:grid; gap:10px; margin-top:10px; }
+    .note {
+      padding:12px 14px;
+      border-radius:14px;
+      font-size:13px;
+      line-height:1.45;
+      border:1px solid transparent;
+    }
+    .warn {
+      background:var(--warn-bg);
+      color:#5f2b17;
+      border-color:#e4c0af;
+    }
+    .ok {
+      background:var(--ok-bg);
+      color:#234c22;
+      border-color:#bdd5bc;
+    }
+    .toolbar {
+      display:grid;
+      gap:10px;
+      margin-top:10px;
+    }
     button {
-      border:none; border-radius:999px; padding:14px 16px; font:600 15px Inter,sans-serif; cursor:pointer; min-height:48px;
+      border:none;
+      border-radius:999px;
+      padding:14px 16px;
+      font:600 15px Inter,sans-serif;
+      cursor:pointer;
+      min-height:48px;
     }
-    .primary { background:var(--accent); color:#fff; }
-    .secondary { background:var(--surface-2); color:var(--text); border:1px solid var(--line); }
-    .danger { background:var(--danger); color:#fff; }
-    .log { display:grid; gap:8px; max-height:180px; overflow:auto; }
-    .event { border:1px solid var(--line); border-radius:12px; padding:10px 12px; background:#fffdfa; font-size:13px; line-height:1.4; }
-    .event b { margin-right:6px; }
+    button:disabled {
+      opacity:.65;
+      cursor:not-allowed;
+    }
+    .primary {
+      background:var(--accent);
+      color:#fff;
+    }
+    .primary:hover { background:var(--accent-dark); }
+    .secondary {
+      background:var(--surface-2);
+      color:var(--text);
+      border:1px solid var(--line);
+    }
     .sticky-submit {
-      position:fixed; left:0; right:0; bottom:0; padding:10px 12px calc(10px + env(safe-area-inset-bottom));
-      background:rgba(245,243,239,.96); backdrop-filter:blur(8px); border-top:1px solid var(--line);
+      position:fixed;
+      left:0;
+      right:0;
+      bottom:0;
+      padding:10px 12px calc(10px + env(safe-area-inset-bottom));
+      background:rgba(245,243,239,.96);
+      backdrop-filter:blur(8px);
+      border-top:1px solid var(--line);
     }
     .sticky-submit button { width:100%; }
-    @media (min-width: 760px) {
+    @media (min-width:760px) {
       .toolbar { grid-template-columns:1fr 1fr; }
     }
   </style>
@@ -72,20 +177,15 @@
 <body>
   <div class="shell stack">
     <section class="card panel">
-      <h1>Перевод с автосбором ответов</h1>
-      <p class="intro">Эта версия рассчитана именно на телефоны. Она автоматически сохраняет черновик в браузере и может отправлять итог вам напрямую через Google Apps Script. На мобильных устройствах полноценный античитинг очень ограничен: вкладки, split-screen и второе устройство веб-страница надёжно не контролирует.</p>
+      <h1>Рубежный контроль по переводу</h1>
+      <p class="intro">Внимательно прочитайте исходный текст и выполните письменный перевод на русский язык. После завершения нажмите кнопку «Отправить ответ».</p>
     </section>
 
     <section class="topgrid">
-      <div class="card metric status-safe" id="statusCard">
-        <div class="label">Статус</div>
-        <div class="value" id="sessionStatus">Черновик</div>
-        <div class="sub" id="sessionSub">Локальное сохранение активно</div>
-      </div>
       <div class="card metric">
         <div class="label">Студент</div>
         <div class="value" id="studentMetric">Не указан</div>
-        <div class="sub">Имя войдёт в отправку</div>
+        <div class="sub">Укажите имя или код</div>
       </div>
       <div class="card metric">
         <div class="label">Таймер</div>
@@ -97,27 +197,27 @@
         <div class="value" id="wordCount">0</div>
         <div class="sub">В переводе</div>
       </div>
+      <div class="card metric">
+        <div class="label">Статус</div>
+        <div class="value" id="sessionStatus">Подготовка</div>
+        <div class="sub" id="sessionSub">Заполните поля и начните работу</div>
+      </div>
     </section>
 
     <section class="card panel stack">
       <div class="field">
-        <label for="studentName">Имя студента</label>
+        <label for="studentName">Имя студента или код</label>
         <input id="studentName" type="text" placeholder="Например: Student_01" autocomplete="off" />
       </div>
       <div class="field">
-        <label for="groupName">Группа / код</label>
-        <input id="groupName" type="text" placeholder="Например: 4 курс / код 03" autocomplete="off" />
+        <label for="groupName">Группа</label>
+        <input id="groupName" type="text" placeholder="Например: 4 курс / ПП-41" autocomplete="off" />
       </div>
-      <div class="field">
-        <label for="appsScriptUrl">Google Apps Script URL</label>
-        <input id="appsScriptUrl" type="text" placeholder="Вставьте сюда URL вида https://script.google.com/macros/s/.../exec" autocomplete="off" />
-      </div>
-      <div class="note warn">Для GitHub Pages это подходит. Но автоматическая отправка сработает только если вы развернёте Google Apps Script как Web App и вставите сюда его URL. Без этого ответы останутся только в браузере студента.</div>
-      <div class="note ok" id="saveStatus">Черновик пока пуст.</div>
+      <div class="note ok" id="saveStatus">Ответ сохраняется автоматически.</div>
     </section>
 
     <section class="card panel stack">
-      <h2 style="font-size:24px;">Исходный текст</h2>
+      <h2>Исходный текст</h2>
       <div class="source-box" id="sourceText">There is a whole mythological and symbolic world that we can only glimpse and begin to understand. We can see it in the material culture. The animals represented in the art tend to be wild animals; people and horses are depicted less often.
 
 There seems to be a kind of sky realm in the high mountains. We see mountain goats and sheep resting on what look like petals or clouds. They sit with their legs folded beneath them and look peaceful in this sky-like space. One can imagine being in the mountains, with clouds above, and catching a glimpse of one of these elusive animals.
@@ -129,39 +229,38 @@ In this way, the art depicts realms and creatures that are both here and not her
 
     <section class="card panel stack">
       <div>
-        <h2 style="font-size:24px; margin-bottom:6px;">Перевод</h2>
-        <p class="intro">Введите перевод на русский язык. При отправке сохранятся имя, группа, текст перевода, таймер, технические события и время отправки.</p>
+        <h2>Перевод</h2>
+        <p class="intro">Введите перевод текста на русский язык.</p>
       </div>
       <textarea id="translationInput" spellcheck="false" placeholder="Введите перевод здесь..."></textarea>
+      <div class="note warn">Перед отправкой проверьте, что имя или код введены правильно.</div>
       <div class="toolbar">
-        <button class="secondary" id="downloadBtn">Скачать резервную копию</button>
-        <button class="danger" id="submitBtn">Отправить преподавателю</button>
+        <button class="secondary" id="downloadBtn" type="button">Скачать резервную копию</button>
+        <button class="primary" id="submitBtn" type="button">Отправить ответ</button>
       </div>
-    </section>
-
-    <section class="card panel stack">
-      <h3 style="font-size:18px;">Журнал</h3>
-      <div class="log" id="logList"></div>
     </section>
   </div>
 
-  <div class="sticky-submit"><button class="primary" id="stickySubmitBtn">Отправить преподавателю</button></div>
+  <div class="sticky-submit">
+    <button class="primary" id="stickySubmitBtn" type="button">Отправить ответ</button>
+  </div>
 
   <script>
-    const STORAGE_KEY = 'translation_mobile_submit_v1';
+    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzJwZDkKaaRpZbge2o5r4gzhQVlddYzJHXb0EG3k3rBNFAm4dT7_-urUoTLFUdBj3sM/exec';
+    const STORAGE_KEY = 'translation_rk_mobile_final_v1';
+
     const translationInput = document.getElementById('translationInput');
     const studentNameInput = document.getElementById('studentName');
     const groupNameInput = document.getElementById('groupName');
-    const appsScriptUrlInput = document.getElementById('appsScriptUrl');
     const studentMetric = document.getElementById('studentMetric');
-    appsScriptUrlInput.value = https://script.google.com/macros/s/AKfycbzJwZDkKaaRpZbge2o5r4gzhQVlddYzJHXb0EG3k3rBNFAm4dT7_-urUoTLFUdBj3sM/exec ;
     const wordCountEl = document.getElementById('wordCount');
     const timerEl = document.getElementById('timer');
     const sessionStatus = document.getElementById('sessionStatus');
     const sessionSub = document.getElementById('sessionSub');
-    const statusCard = document.getElementById('statusCard');
-    const logList = document.getElementById('logList');
     const saveStatus = document.getElementById('saveStatus');
+    const submitBtn = document.getElementById('submitBtn');
+    const stickySubmitBtn = document.getElementById('stickySubmitBtn');
+    const downloadBtn = document.getElementById('downloadBtn');
 
     let remaining = 40 * 60;
     let eventLog = [];
@@ -178,26 +277,19 @@ In this way, the art depicts realms and creatures that are both here and not her
     function addLog(type, detail) {
       const item = { time: nowStamp(), type, detail };
       eventLog.unshift(item);
-      const div = document.createElement('div');
-      div.className = 'event';
-      div.innerHTML = `<b>${item.time}</b>${type}: ${detail}`;
-      logList.prepend(div);
-      while (logList.children.length > 60) logList.removeChild(logList.lastChild);
       saveDraft();
     }
 
     function updateWords() {
-      const t = translationInput.value.trim();
-      wordCountEl.textContent = t ? t.split(/\s+/).length : 0;
+      const text = translationInput.value.trim();
+      wordCountEl.textContent = text ? text.split(/\s+/).length : 0;
     }
 
     function updateStudentMetric() {
       studentMetric.textContent = studentNameInput.value.trim() || 'Не указан';
     }
 
-    function setStatus(kind, title, sub) {
-      statusCard.classList.remove('status-safe','status-warn','status-danger');
-      statusCard.classList.add(kind);
+    function setStatus(title, sub) {
       sessionStatus.textContent = title;
       sessionSub.textContent = sub;
     }
@@ -206,7 +298,6 @@ In this way, the art depicts realms and creatures that are both here and not her
       return {
         student_name: studentNameInput.value,
         group_name: groupNameInput.value,
-        apps_script_url: appsScriptUrlInput.value,
         translation: translationInput.value,
         source_text: document.getElementById('sourceText').innerText,
         remaining,
@@ -219,9 +310,9 @@ In this way, the art depicts realms and creatures that are both here and not her
     function saveDraft() {
       try {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(draftPayload()));
-        saveStatus.textContent = `Черновик сохранён: ${nowStamp()}`;
+        saveStatus.textContent = `Ответ сохраняется автоматически: ${nowStamp()}`;
       } catch (e) {
-        saveStatus.textContent = 'Не удалось сохранить черновик локально.';
+        saveStatus.textContent = 'Не удалось сохранить ответ локально.';
       }
     }
 
@@ -232,19 +323,12 @@ In this way, the art depicts realms and creatures that are both here and not her
         const data = JSON.parse(raw);
         studentNameInput.value = data.student_name || '';
         groupNameInput.value = data.group_name || '';
-        appsScriptUrlInput.value = data.apps_script_url || '';
         translationInput.value = data.translation || '';
         remaining = typeof data.remaining === 'number' ? data.remaining : remaining;
         eventLog = Array.isArray(data.events) ? data.events : [];
-        eventLog.slice().reverse().forEach(item => {
-          const div = document.createElement('div');
-          div.className = 'event';
-          div.innerHTML = `<b>${item.time}</b>${item.type}: ${item.detail}`;
-          logList.appendChild(div);
-        });
         updateWords();
         updateStudentMetric();
-        saveStatus.textContent = 'Черновик восстановлен из браузера.';
+        saveStatus.textContent = 'Черновик ответа восстановлен.';
       } catch (e) {
         saveStatus.textContent = 'Не удалось восстановить черновик.';
       }
@@ -258,11 +342,16 @@ In this way, the art depicts realms and creatures that are both here and not her
       if (remaining > 0) remaining -= 1;
       saveDraft();
     }
+
     setInterval(tick, 1000);
 
     function downloadBackup() {
-      const payload = draftPayload();
-      const filename = `${safeName(studentNameInput.value)}_backup.json`;
+      const payload = {
+        ...draftPayload(),
+        downloaded_at: new Date().toISOString(),
+        event_type: 'backup_download'
+      };
+      const filename = `${safeName(studentNameInput.value)}_translation_backup.json`;
       const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
@@ -270,17 +359,21 @@ In this way, the art depicts realms and creatures that are both here and not her
       a.download = filename;
       a.click();
       URL.revokeObjectURL(url);
-      addLog('Резервная копия', 'Скачан локальный backup-файл');
+      addLog('Резервная копия', 'Скачан backup-файл');
+    }
+
+    function setSubmitDisabled(disabled) {
+      submitBtn.disabled = disabled;
+      stickySubmitBtn.disabled = disabled;
+      downloadBtn.disabled = disabled && sent;
     }
 
     async function submitToTeacher() {
-      const endpoint = appsScriptUrlInput.value.trim();
-      if (!studentNameInput.value.trim()) {
-        alert('Сначала введите имя студента.');
-        return;
-      }
-      if (!endpoint) {
-        alert('Сначала вставьте URL Google Apps Script Web App.');
+      if (sent) return;
+
+      const studentName = studentNameInput.value.trim();
+      if (!studentName) {
+        alert('Пожалуйста, введите имя студента или код.');
         return;
       }
 
@@ -290,52 +383,69 @@ In this way, the art depicts realms and creatures that are both here and not her
         event_type: 'translation_submission'
       };
 
-      setStatus('status-warn', 'Отправка...', 'Пожалуйста, не закрывайте страницу');
+      setSubmitDisabled(true);
+      setStatus('Отправка...', 'Пожалуйста, не закрывайте страницу');
 
       try {
-        const response = await fetch(endpoint, {
+        const response = await fetch(APPS_SCRIPT_URL, {
           method: 'POST',
           redirect: 'follow',
           headers: { 'Content-Type': 'text/plain;charset=utf-8' },
           body: JSON.stringify(payload)
         });
 
-        const text = await response.text();
-        addLog('Отправка', 'Ответ отправлен преподавателю');
-        setStatus('status-safe', 'Отправлено', 'Данные переданы успешно');
+        await response.text();
         sent = true;
         localStorage.removeItem(STORAGE_KEY);
-        alert('Ответ успешно отправлен преподавателю.');
-        console.log(text);
+        setStatus('Отправлено', 'Ответ успешно сохранён');
+        saveStatus.textContent = 'Ответ отправлен преподавателю.';
+        alert('Ответ успешно отправлен.');
+        setSubmitDisabled(true);
       } catch (err) {
-        addLog('Ошибка отправки', 'Не удалось отправить данные');
-        setStatus('status-danger', 'Ошибка', 'Скачайте резервную копию и повторите');
+        setStatus('Ошибка', 'Скачайте резервную копию и попробуйте снова');
+        saveStatus.textContent = 'Не удалось отправить ответ. Скачайте резервную копию.';
         alert('Отправка не удалась. Скачайте резервную копию и попробуйте снова.');
+        setSubmitDisabled(false);
       }
     }
 
-    translationInput.addEventListener('input', () => { updateWords(); saveDraft(); });
-    studentNameInput.addEventListener('input', () => { updateStudentMetric(); saveDraft(); });
+    translationInput.addEventListener('input', () => {
+      updateWords();
+      saveDraft();
+      setStatus('Выполнение', 'Работа в процессе');
+    });
+
+    studentNameInput.addEventListener('input', () => {
+      updateStudentMetric();
+      saveDraft();
+    });
+
     groupNameInput.addEventListener('input', saveDraft);
-    appsScriptUrlInput.addEventListener('input', saveDraft);
-    document.getElementById('downloadBtn').addEventListener('click', downloadBackup);
-    document.getElementById('submitBtn').addEventListener('click', submitToTeacher);
-    document.getElementById('stickySubmitBtn').addEventListener('click', submitToTeacher);
+    downloadBtn.addEventListener('click', downloadBackup);
+    submitBtn.addEventListener('click', submitToTeacher);
+    stickySubmitBtn.addEventListener('click', submitToTeacher);
 
     document.addEventListener('visibilitychange', () => {
       if (document.hidden && !sent) addLog('Вкладка', 'Страница стала неактивной');
     });
+
     window.addEventListener('blur', () => {
       if (!sent) addLog('Фокус', 'Окно браузера потеряло фокус');
     });
-    document.addEventListener('paste', () => addLog('Вставка', 'Зафиксирована вставка текста'));
-    document.addEventListener('copy', () => addLog('Копирование', 'Зафиксирована попытка копирования'));
+
+    document.addEventListener('paste', () => {
+      if (!sent) addLog('Вставка', 'Зафиксирована вставка текста');
+    });
+
+    document.addEventListener('copy', () => {
+      if (!sent) addLog('Копирование', 'Зафиксирована попытка копирования');
+    });
 
     restoreDraft();
-    setStatus('status-safe', 'Черновик', 'Локальное сохранение активно');
     updateWords();
     updateStudentMetric();
-    addLog('Старт', 'Открыта мобильная страница перевода');
+    setStatus('Подготовка', 'Заполните поля и начните работу');
+    addLog('Старт', 'Открыта страница перевода');
     tick();
   </script>
 </body>
